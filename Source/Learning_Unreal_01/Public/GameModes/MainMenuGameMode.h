@@ -3,8 +3,6 @@
 #include "GameFramework/GameModeBase.h"
 #include "MainMenuGameMode.generated.h"
 
-class UUserWidget;
-
 UCLASS()
 class LEARNING_UNREAL_01_API AMainMenuGameMode : public AGameModeBase
 {
@@ -12,9 +10,12 @@ class LEARNING_UNREAL_01_API AMainMenuGameMode : public AGameModeBase
 	
 public:
 	AMainMenuGameMode();
-	virtual void StartPlay() override;
+	virtual void BeginPlay() override;
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "User Interface")
-	TSubclassOf<UUserWidget> MainMenuWidget;
+	TSubclassOf<class UUserWidget> MainMenuWidgetClass;
+
+	UPROPERTY()
+	class UMainMenuUserWidget* MainMenuWidget;
 };
