@@ -17,6 +17,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Game State")
 	TSubclassOf<class APlayGameState> PlayGameStateClass;
 
+	// TSubclassOf for the Blueprint version of MyCharacter
+	UPROPERTY(EditDefaultsOnly, Category = "Character")
+	TSubclassOf<class AMyCharacter> PlayerCharacterClass;
 private:
 
 };
