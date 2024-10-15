@@ -4,8 +4,6 @@
 void UMainMenuUserWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
-
-	// Init widget and bind buttons
 }
 
 void UMainMenuUserWidget::StartGame()
