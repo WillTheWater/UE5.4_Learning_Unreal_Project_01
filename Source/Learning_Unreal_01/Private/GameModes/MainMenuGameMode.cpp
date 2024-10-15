@@ -1,7 +1,7 @@
 #include "GameModes/MainMenuGameMode.h"
 #include "Widgets/MainMenuUserWidget.h"
 #include "Kismet/GameplayStatics.h" // For GameplayStatics
-#include "UObject/ConstructorHelpers.h"
+#include "UObject/ConstructorHelpers.h" // For ConstructorHelpers
 
 AMainMenuGameMode::AMainMenuGameMode()
 {
@@ -13,9 +13,9 @@ AMainMenuGameMode::AMainMenuGameMode()
 	}
 }
 
-void AMainMenuGameMode::BeginPlay()
+void AMainMenuGameMode::StartPlay()
 {
-	Super::BeginPlay();
+	Super::StartPlay();
 
 	// Setting up the Main Menu Widget
 	if (MainMenuWidgetClass)

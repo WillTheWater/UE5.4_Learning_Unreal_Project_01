@@ -10,7 +10,7 @@ class LEARNING_UNREAL_01_API AMainMenuGameMode : public AGameModeBase
 	
 public:
 	AMainMenuGameMode();
-	virtual void BeginPlay() override;
+	virtual void StartPlay() override;
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "User Interface")
