@@ -11,7 +11,12 @@ class LEARNING_UNREAL_01_API APlayGameMode : public AGameModeBase
 public:
 	APlayGameMode();
 	virtual void StartPlay() override;
-
+	virtual void Tick(float DeltaTime) override;
 protected:
+	// TSubclassOf for the Blueprint version of PlayGameState
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Game State")
+	TSubclassOf<class APlayGameState> PlayGameStateClass;
+
+private:
 
 };
