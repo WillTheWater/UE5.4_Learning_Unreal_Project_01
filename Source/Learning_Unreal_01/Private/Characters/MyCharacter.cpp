@@ -20,7 +20,6 @@ AMyCharacter::AMyCharacter()
 	// Creates the SpringArm and Attaches it to the root component
 	PlayerCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("Player Camera"));
 	PlayerCamera->SetupAttachment(CameraSpringArm);
-
 }
 
 void AMyCharacter::BeginPlay()
@@ -36,13 +35,11 @@ void AMyCharacter::BeginPlay()
 			Subsystem->AddMappingContext(MyCharacterContext, 0);
 		}
 	}
-	
 }
 
 void AMyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void AMyCharacter::Move(const FInputActionValue& Value)
@@ -56,7 +53,6 @@ void AMyCharacter::Move(const FInputActionValue& Value)
 	}
 }
 
-
 void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
@@ -67,6 +63,5 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 		// Binding the Move function
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AMyCharacter::Move);
 	}
-
 }
 
