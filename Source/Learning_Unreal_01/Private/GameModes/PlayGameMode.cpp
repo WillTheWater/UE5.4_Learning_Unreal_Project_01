@@ -17,7 +17,7 @@ APlayGameMode::APlayGameMode()
 	if (MyCharacterBP.Succeeded()) 
 	{ 
 		PlayerCharacterClass = MyCharacterBP.Class;
-		DefaultPawnClass = PlayerCharacterClass; // Sets the BP_MyCharacter as the default pawn for PlayGameMode
+		DefaultPawnClass = PlayerCharacterClass; // Sets the BP_MyCharacter as the default pawn for PlayGameMode 
 	}
 }
 

@@ -14,11 +14,11 @@ public:
 	virtual void Tick(float DeltaTime) override;
 protected:
 	// TSubclassOf for the Blueprint version of PlayGameState
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Game State")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSubclassOf<class APlayGameState> PlayGameStateClass;
 
 	// TSubclassOf for the Blueprint version of MyCharacter
-	UPROPERTY(EditDefaultsOnly, Category = "Character")
+	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class AMyCharacter> PlayerCharacterClass;
 private:
 
