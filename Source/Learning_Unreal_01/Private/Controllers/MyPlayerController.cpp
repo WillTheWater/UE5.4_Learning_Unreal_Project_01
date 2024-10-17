@@ -1,5 +1,7 @@
 #include "Controllers/MyPlayerController.h"
 #include "Kismet/GameplayStatics.h" // For UGameplayStatucs
+#include "GameFramework/Pawn.h"
+#include "Characters/MyCharacter.h"
 // The following are all need for use of the EnhancedInput Sysytem
 #include "Components/InputComponent.h"
 #include "EnhancedInputComponent.h"
@@ -23,9 +25,25 @@ void AMyPlayerController::BeginPlay()
 
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent))
 	{
+        // Binding the Move function
+		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AMyPlayerController::Move);
 		// Binding the PauseGame function
 		EnhancedInputComponent->BindAction(PauseAction, ETriggerEvent::Started, this, &AMyPlayerController::PauseGame);
 	}
+    APawn* ControlledPawn = GetPawn();
+    ControlledCharacter = CastChecked<AMyCharacter>(ControlledPawn); 
+}
+
+void AMyPlayerController::Move(const FInputActionValue& Value)
+{
+    if (ControlledCharacter && InputComponent)
+    {
+        FVector2D MoveVector = Value.Get<FVector2D>();
+
+        // Apply movement input to the character
+        ControlledCharacter->AddMovementInput(ControlledCharacter->GetActorForwardVector(), MoveVector.Y);
+        ControlledCharacter->AddMovementInput(ControlledCharacter->GetActorRightVector(), MoveVector.X);
+    }
 }
 
 void AMyPlayerController::PauseGame(const FInputActionValue& Value)

@@ -25,16 +25,6 @@ AMyCharacter::AMyCharacter()
 void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// This adds the Input Mapping Context to the Character Blueprint
-	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
-	{
-		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
-		{
-			// The IMC Blueprint is set in the editor via the Character Blueprint
-			Subsystem->AddMappingContext(MyCharacterContext, 0);
-		}
-	}
 }
 
 void AMyCharacter::Tick(float DeltaTime)
@@ -42,26 +32,8 @@ void AMyCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void AMyCharacter::Move(const FInputActionValue& Value)
-{
-	FVector2D MoveVector = Value.Get<FVector2D>();
-
-	if (Controller)
-	{
-		AddMovementInput(GetActorForwardVector(), MoveVector.Y);
-		AddMovementInput(GetActorRightVector(), MoveVector.X);
-	}
-}
-
 void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-	// This casts the default player input to an Enhanced Input Component
-	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
-	{
-		// Binding the Move function
-		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AMyCharacter::Move);
-	}
 }
 

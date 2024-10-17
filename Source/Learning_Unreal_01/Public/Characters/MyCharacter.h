@@ -16,14 +16,6 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, Category = "Input")
-	class UInputMappingContext* MyCharacterContext;
-
-	UPROPERTY(EditAnywhere, Category = "Input")
-	class UInputAction* MoveAction;
-
-	void Move(const struct FInputActionValue& Value); // This is the function that gets bound to the UInputAction MoveAction
-
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Camera")
 	class USpringArmComponent* CameraSpringArm;

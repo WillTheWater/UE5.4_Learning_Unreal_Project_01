@@ -18,7 +18,14 @@ protected:
 	class UInputMappingContext* MyControllerContext;
 
 	UPROPERTY(EditAnywhere, Category = "Input")
+	class UInputAction* MoveAction;
+
+	UPROPERTY(EditAnywhere, Category = "Input")
 	class UInputAction* PauseAction;
 
+	void Move(const struct FInputActionValue& Value);
 	void PauseGame(const struct FInputActionValue& Value);
+
+private:
+	class AMyCharacter* ControlledCharacter;
 };
