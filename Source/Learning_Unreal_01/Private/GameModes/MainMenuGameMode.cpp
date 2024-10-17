@@ -24,9 +24,6 @@ void AMainMenuGameMode::StartPlay()
 		if (MainMenu)
 		{
 			MainMenu->AddToViewport();
-			UE_LOG(LogTemp, Warning, TEXT("Widget Added to Viewport"))
 		}
-		else { UE_LOG(LogTemp, Warning, TEXT("Widget Failed to be Added to Viewport")) }
 	}
-	else { UE_LOG(LogTemp, Warning, TEXT("Widget Class is null")) }
 }

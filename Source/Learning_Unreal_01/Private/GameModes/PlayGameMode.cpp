@@ -1,6 +1,8 @@
 #include "GameModes/PlayGameMode.h"
 #include "GameStates/PlayGameState.h"
 #include "Characters/MyCharacter.h"
+#include "Controllers/MyPlayerController.h"
+#include "Widgets/FinishLevelUserWidget.h"
 #include "Kismet/GameplayStatics.h" // For UGameplayStatucs
 
 APlayGameMode::APlayGameMode()
@@ -19,11 +21,35 @@ APlayGameMode::APlayGameMode()
 		PlayerCharacterClass = MyCharacterBP.Class;
 		DefaultPawnClass = PlayerCharacterClass; // Sets the BP_MyCharacter as the default pawn for PlayGameMode 
 	}
+
+    // Sets Blueprint version of MyController as default controller
+    static ConstructorHelpers::FClassFinder<AMyPlayerController> MyControllerBP(TEXT("/Game/Blueprints/Input/BP_MyController"));
+    if (MyControllerBP.Succeeded())
+    {
+        PlayerControllerClass = MyControllerBP.Class;
+    }
+
+    // Assigning the Blueprint of the widget to FinishLevelWidgetClass
+    static ConstructorHelpers::FClassFinder<UUserWidget> WidgetClass(TEXT("/Game/Blueprints/UserWidgets/BP_FinishLevelWidget"));
+    if (WidgetClass.Succeeded())
+    {
+        FinishLevelWidgetClass = WidgetClass.Class;
+    }
 }
 
 void APlayGameMode::StartPlay()
 {
 	Super::StartPlay();
+    AMyPlayerController* MyController = CastChecked<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
+    if (MyController)
+    {
+        // Show the mouse cursor
+        MyController->bShowMouseCursor = false;
+
+        // Set input mode to Game only
+        FInputModeGameOnly GameMode;
+        MyController->SetInputMode(GameMode);
+    }
 }
 
 void APlayGameMode::Tick(float DeltaTime)
@@ -32,4 +58,33 @@ void APlayGameMode::Tick(float DeltaTime)
 
 	APlayGameState* PlayState = GetGameState<APlayGameState>();
 	if (PlayState) { PlayState->UpdateLevelTimer(DeltaTime); }
+}
+
+void APlayGameMode::HandleLevelComplete()
+{
+    // Pause the game
+    UGameplayStatics::SetGamePaused(GetWorld(), true);
+
+    // Create the finish level UI
+    if (FinishLevelWidgetClass)
+    {
+        auto FinishLevel = CastChecked<UFinishLevelUserWidget>(CreateWidget<UUserWidget>(GetWorld(), FinishLevelWidgetClass));
+        if (FinishLevel)
+        {
+            FinishLevel->AddToViewport();
+            UE_LOG(LogTemp, Warning, TEXT("HandleLevelComplete Called"));
+            // Get the player controller
+            AMyPlayerController* MyController = CastChecked<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
+            if (MyController)
+            {
+                // Show the mouse cursor
+                MyController->bShowMouseCursor = true;
+
+                // Set input mode to UI only
+                FInputModeUIOnly InputMode; 
+                InputMode.SetWidgetToFocus(FinishLevel->TakeWidget()); 
+                MyController->SetInputMode(InputMode); 
+            }
+        }
+    }
 }

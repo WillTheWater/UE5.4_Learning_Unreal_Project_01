@@ -12,14 +12,21 @@ public:
 	APlayGameMode();
 	virtual void StartPlay() override;
 	virtual void Tick(float DeltaTime) override;
+	void HandleLevelComplete();
 protected:
 	// TSubclassOf for the Blueprint version of PlayGameState
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UPROPERTY()
 	TSubclassOf<class APlayGameState> PlayGameStateClass;
 
 	// TSubclassOf for the Blueprint version of MyCharacter
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY()
 	TSubclassOf<class AMyCharacter> PlayerCharacterClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "User Interface")
+	TSubclassOf<class UUserWidget> FinishLevelWidgetClass;
+
+	UPROPERTY()
+	class UFinishLevelUserWidget* FinishLevelWidget;
 private:
 
 };
