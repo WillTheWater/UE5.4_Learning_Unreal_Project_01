@@ -47,7 +47,6 @@ void AMyPlayerController::Move(const FInputActionValue& Value)
         // Apply movement input to the character
         ControlledCharacter->AddMovementInput(ControlledCharacter->GetActorForwardVector(), MoveVector.Y);
         ControlledCharacter->AddMovementInput(ControlledCharacter->GetActorRightVector(), MoveVector.X);
-        MyMovementComponent->bOrientRotationToMovement = true;
     }
 }
 

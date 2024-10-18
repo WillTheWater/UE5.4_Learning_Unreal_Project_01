@@ -22,6 +22,11 @@ void UMyGameInstance::StartGameInstance()
     Super::StartGameInstance();
 }
 
+void UMyGameInstance::PickupItem()
+{
+    PlayerScore++;
+}
+
 void UMyGameInstance::SetPlayerScore(int32 NewScore)
 {
     PlayerScore = NewScore;

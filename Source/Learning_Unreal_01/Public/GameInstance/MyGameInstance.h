@@ -15,6 +15,7 @@ public:
 	virtual void StartGameInstance() override;
 
 	LevelManager* GetLevelMgr() { return &MyLevelManager; }
+	void PickupItem();
 
 	UFUNCTION(BlueprintCallable, Category = "Player Data")
 	int32 GetPlayerScore() const { return PlayerScore; }
