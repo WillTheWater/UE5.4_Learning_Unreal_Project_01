@@ -23,8 +23,12 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	class UInputAction* PauseAction;
 
+	UPROPERTY(EditAnywhere, Category = "Input")
+	class UInputAction* JumpAction;
+
 	void Move(const struct FInputActionValue& Value);
 	void PauseGame(const struct FInputActionValue& Value);
+	void Jump(const struct FInputActionValue& Value);
 
 private:
 	class AMyCharacter* ControlledCharacter;

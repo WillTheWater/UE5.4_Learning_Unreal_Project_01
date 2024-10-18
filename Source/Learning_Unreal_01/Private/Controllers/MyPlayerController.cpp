@@ -2,6 +2,7 @@
 #include "Kismet/GameplayStatics.h" // For UGameplayStatucs
 #include "GameFramework/Pawn.h"
 #include "Characters/MyCharacter.h"
+#include "GameFramework/CharacterMovementComponent.h"
 // The following are all need for use of the EnhancedInput Sysytem
 #include "Components/InputComponent.h"
 #include "EnhancedInputComponent.h"
@@ -29,6 +30,8 @@ void AMyPlayerController::BeginPlay()
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AMyPlayerController::Move);
 		// Binding the PauseGame function
 		EnhancedInputComponent->BindAction(PauseAction, ETriggerEvent::Started, this, &AMyPlayerController::PauseGame);
+        // Binding the Jump function
+		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &AMyPlayerController::Jump);
 	}
     APawn* ControlledPawn = GetPawn();
     ControlledCharacter = CastChecked<AMyCharacter>(ControlledPawn); 
@@ -36,13 +39,15 @@ void AMyPlayerController::BeginPlay()
 
 void AMyPlayerController::Move(const FInputActionValue& Value)
 {
+    UCharacterMovementComponent* MyMovementComponent = ControlledCharacter->GetCharacterMovement();
     if (ControlledCharacter && InputComponent)
     {
         FVector2D MoveVector = Value.Get<FVector2D>();
-
+    
         // Apply movement input to the character
         ControlledCharacter->AddMovementInput(ControlledCharacter->GetActorForwardVector(), MoveVector.Y);
         ControlledCharacter->AddMovementInput(ControlledCharacter->GetActorRightVector(), MoveVector.X);
+        MyMovementComponent->bOrientRotationToMovement = true;
     }
 }
 
@@ -64,5 +69,13 @@ void AMyPlayerController::PauseGame(const FInputActionValue& Value)
         UGameplayStatics::SetGamePaused(this, true);
         SetInputMode(FInputModeGameAndUI()); // Set input mode to handle UI and game
         bShowMouseCursor = true; // Show mouse cursor
+    }
+}
+
+void AMyPlayerController::Jump(const FInputActionValue& Value)
+{
+    if (ControlledCharacter && InputComponent)
+    {
+        ControlledCharacter->Jump();
     }
 }

@@ -25,6 +25,8 @@ void UFinishLevelUserWidget::QuitGame()
 
 void UFinishLevelUserWidget::Restart()
 {
-	FName CurrentLevelName = GameInstance->GetLevelMgr()->GetLevelName(GameInstance->CurrentLevel);
+    GameInstance = Cast<UMyGameInstance>(GetWorld()->GetGameInstance());
+    auto LevelMgr = GameInstance->GetLevelMgr();
+	FName CurrentLevelName = LevelMgr->GetLevelName(GameInstance->CurrentLevel);
 	UGameplayStatics::OpenLevel(this, CurrentLevelName);
 }
