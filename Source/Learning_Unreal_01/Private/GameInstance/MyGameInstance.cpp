@@ -3,7 +3,6 @@
 void UMyGameInstance::Init()
 {
     Super::Init();
-
     if (GEngine) { UE_LOG(LogTemp, Warning, TEXT("My Init Game Instance")); }
     if (GEngine) { UE_LOG(LogTemp, Warning, TEXT("Player Score: %d"), PlayerScore); }
     if (GEngine) { UE_LOG(LogTemp, Warning, TEXT("Player Level: %d"), PlayerLevel); }
@@ -15,6 +14,7 @@ void UMyGameInstance::OnStart()
     Super::OnStart();
 
     if (GEngine) { UE_LOG(LogTemp, Warning, TEXT("My On Start")); }
+    CurrentLevel = ELevels::MainMenu;
 }
 
 void UMyGameInstance::StartGameInstance()

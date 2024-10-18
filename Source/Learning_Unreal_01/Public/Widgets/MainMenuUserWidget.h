@@ -1,7 +1,6 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "Widgets/LevelManager.h"
 #include "MainMenuUserWidget.generated.h"
 
 UCLASS()
@@ -17,6 +16,5 @@ public:
 	void QuitGame();
 
 private:
-	LevelManager Manager;
-	ELevels CurrentLevel = ELevels::MainMenu;
+	class UMyGameInstance* GameInstance;
 };

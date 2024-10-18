@@ -1,6 +1,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
+#include "Widgets/LevelManager.h"
 #include "MyGameInstance.generated.h"
 
 UCLASS()
@@ -12,6 +13,8 @@ public:
 	virtual void Init() override;
 	virtual void OnStart() override;
 	virtual void StartGameInstance() override;
+
+	LevelManager* GetLevelMgr() { return &MyLevelManager; }
 
 	UFUNCTION(BlueprintCallable, Category = "Player Data")
 	int32 GetPlayerScore() const { return PlayerScore; }
@@ -28,6 +31,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Player Data")
 	void SetPlayerLevel(int32 NewLevel);
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Player Data")
+	ELevels CurrentLevel;
+
 	UFUNCTION(BlueprintCallable, Category = "Graphics Settings")
 	void SetGraphicsQuality(int32 NewQuality);
 
@@ -43,5 +49,5 @@ protected:
 	int32 GraphicsQuality = 3;
 
 private:
-
+	LevelManager MyLevelManager;
 };

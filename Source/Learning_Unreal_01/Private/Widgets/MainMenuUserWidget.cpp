@@ -1,12 +1,20 @@
 #include "Widgets/MainMenuUserWidget.h"
+#include "GameInstance/MyGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 
 void UMainMenuUserWidget::StartGame()
 {
-	ELevels NextLevel = Manager.GetNextLevel(CurrentLevel);
-	FName NextLevelName = Manager.GetLevelName(NextLevel);
-	UGameplayStatics::OpenLevel(this, NextLevelName);
-	CurrentLevel = NextLevel;
+	GameInstance = Cast<UMyGameInstance>(GetWorld()->GetGameInstance());
+    auto LevelMgr = GameInstance->GetLevelMgr();
+    // Get and set the next level
+    ELevels NextLevel = LevelMgr->GetNextLevel(GameInstance->CurrentLevel);
+    FName NextLevelName = LevelMgr->GetLevelName(NextLevel);
+
+    // Update the current level in the game instance
+    GameInstance->CurrentLevel = NextLevel;
+
+    // Open the new level
+    UGameplayStatics::OpenLevel(this, NextLevelName);
 }
 
 void UMainMenuUserWidget::QuitGame()
