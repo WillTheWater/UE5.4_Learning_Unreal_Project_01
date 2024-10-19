@@ -22,6 +22,10 @@ protected:
 	UPROPERTY()
 	TSubclassOf<class AMyCharacter> PlayerCharacterClass;
 
+	// TSubclassOf for the Blueprint version of PlayModeHUD
+	UPROPERTY()
+	TSubclassOf<class APlayModeHUD> PlayModeHUDClass;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "User Interface")
 	TSubclassOf<class UUserWidget> FinishLevelWidgetClass;
 

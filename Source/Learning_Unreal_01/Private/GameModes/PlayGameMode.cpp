@@ -3,6 +3,7 @@
 #include "Characters/MyCharacter.h"
 #include "Controllers/MyPlayerController.h"
 #include "Widgets/FinishLevelUserWidget.h"
+#include "HUDs/PlayModeHUD.h"
 #include "Kismet/GameplayStatics.h" // For UGameplayStatucs
 
 APlayGameMode::APlayGameMode()
@@ -21,6 +22,14 @@ APlayGameMode::APlayGameMode()
 		PlayerCharacterClass = MyCharacterBP.Class;
 		DefaultPawnClass = PlayerCharacterClass; // Sets the BP_MyCharacter as the default pawn for PlayGameMode 
 	}
+
+    // Sets Blueprint version of PlayModeHUD as the default HUD
+    static ConstructorHelpers::FClassFinder<APlayModeHUD> PlayModeHUDBP(TEXT("/Game/Blueprints/UserWidgets/BP_PlayModeHUD"));
+    if (PlayModeHUDBP.Succeeded())
+    {
+        PlayModeHUDClass = PlayModeHUDBP.Class;
+        HUDClass = PlayModeHUDClass; // Sets the PlayModeHUD as the default HUD for PlayGameMode 
+    }
 
     // Sets Blueprint version of MyController as default controller
     static ConstructorHelpers::FClassFinder<AMyPlayerController> MyControllerBP(TEXT("/Game/Blueprints/Input/BP_MyController"));
@@ -72,7 +81,6 @@ void APlayGameMode::HandleLevelComplete()
         if (FinishLevel)
         {
             FinishLevel->AddToViewport();
-            UE_LOG(LogTemp, Warning, TEXT("HandleLevelComplete Called"));
             // Get the player controller
             AMyPlayerController* MyController = CastChecked<AMyPlayerController>(GetWorld()->GetFirstPlayerController());
             if (MyController)
@@ -82,7 +90,7 @@ void APlayGameMode::HandleLevelComplete()
 
                 // Set input mode to UI only
                 FInputModeUIOnly InputMode; 
-                InputMode.SetWidgetToFocus(FinishLevel->TakeWidget()); 
+                //InputMode.SetWidgetToFocus(FinishLevel->TakeWidget()); 
                 MyController->SetInputMode(InputMode); 
             }
         }
