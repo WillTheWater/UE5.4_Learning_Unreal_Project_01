@@ -13,6 +13,7 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
 private:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class UPlayerOverlay> PlayerOverlayClass;

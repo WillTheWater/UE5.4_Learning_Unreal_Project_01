@@ -18,13 +18,16 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = "Collectiables")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Collectibles")
+	int32 PickupID;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = "Collectibles")
 	class USphereComponent* CollisionShpere;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = "Collectiables")
+	UPROPERTY(VisibleDefaultsOnly, Category = "Collectibles")
 	class UStaticMeshComponent* StaticMesh;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = "Collectiables")
+	UPROPERTY(VisibleDefaultsOnly, Category = "Collectibles")
 	class URotatingMovementComponent* RotationComponent;
 
 	UFUNCTION(BlueprintPure)
@@ -42,6 +45,7 @@ protected:
 	float Frequency;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hover Parameters")
 	float RotationSpeed;
+
 
 private:	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))

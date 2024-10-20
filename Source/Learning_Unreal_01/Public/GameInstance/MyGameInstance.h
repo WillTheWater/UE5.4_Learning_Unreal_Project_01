@@ -14,8 +14,11 @@ public:
 	virtual void OnStart() override;
 	virtual void StartGameInstance() override;
 
+	TMap<int32, bool> PickupStates;  // Stores if a pickup is collected
+
 	LevelManager* GetLevelMgr() { return &MyLevelManager; }
-	void PickupItem();
+	void PickupItem(int32 PickupID);
+	bool IsPickupCollected(int32 PickupID) const;
 
 	UFUNCTION(BlueprintCallable, Category = "Player Data")
 	int32 GetPlayerScore() const { return PlayerScore; }

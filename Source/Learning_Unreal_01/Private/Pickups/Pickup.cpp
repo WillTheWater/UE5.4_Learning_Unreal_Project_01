@@ -28,6 +28,21 @@ APickup::APickup()
 void APickup::BeginPlay()
 {
 	Super::BeginPlay();
+	UMyGameInstance* GameInstance = CastChecked<UMyGameInstance>(GetGameInstance());
+	if (!GameInstance)
+	{
+		UE_LOG(LogTemp, Error, TEXT("GameInstance is null in APickup::BeginPlay"));
+		return;
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("PickupID: %d"), PickupID);
+
+	if (GameInstance->IsPickupCollected(PickupID))
+	{
+		SetActorHiddenInGame(true);
+		SetActorEnableCollision(false);
+		SetActorTickEnabled(false);
+	}
 	CollisionShpere->OnComponentBeginOverlap.AddDynamic(this, &APickup::BeginOverlap);
 }
 
@@ -57,15 +72,10 @@ void APickup::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 {
 	if (AMyCharacter* player = CastChecked<AMyCharacter>(OtherActor))
 	{
-		if (GEngine)
+		UMyGameInstance* GameInstance = CastChecked<UMyGameInstance>(GetWorld()->GetGameInstance());
+		if (GameInstance && !GameInstance->IsPickupCollected(PickupID))
 		{
-			GEngine->AddOnScreenDebugMessage(1, 10.f, FColor::Cyan, "Overlapped");
-		}
-		// Notify the game mode that the level is finished
-		UMyGameInstance* GameInstance = Cast<UMyGameInstance>(GetWorld()->GetGameInstance());
-		if (GameInstance)
-		{
-			GameInstance->PickupItem();
+			GameInstance->PickupItem(PickupID);
 			Destroy();
 		}
 	}

@@ -26,3 +26,9 @@ void APlayModeHUD::BeginPlay()
 		}
 	}
 }
+
+void APlayModeHUD::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	Overlay->SetScore();
+}

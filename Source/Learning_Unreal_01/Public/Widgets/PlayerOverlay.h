@@ -9,10 +9,12 @@ class LEARNING_UNREAL_01_API UPlayerOverlay : public UUserWidget
 	GENERATED_BODY()
 	
 public:
-	void SetScore(int32 Score);
+	void SetScore();
 
 private:
 
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* ScoreText;
+
+	class UMyGameInstance* GameInstance;
 };
