@@ -10,7 +10,7 @@ APlayGameState::APlayGameState()
 void APlayGameState::BeginPlay()
 {
 	Super::BeginPlay();
-
+	UE_LOG(LogTemp, Error, TEXT("APlayGameState::BeginPlay"));
 	// Reset LevelTimer
 	LevelTimer = 0.f;
 }
